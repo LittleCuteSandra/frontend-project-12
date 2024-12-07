@@ -4,8 +4,9 @@
   "description": "project Slack",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "start-server -s ./frontend/dist"
+    "build": "npm run build --prefix frontend",
+    "start": "npx start-server -s ./frontend/dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
