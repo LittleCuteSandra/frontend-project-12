@@ -7,6 +7,10 @@ import pluginReact from "eslint-plugin-react";
 export default [
   {files: ["**/*.{js,mjs,cjs,jsx}"]},
   {languageOptions: { globals: globals.browser }},
+  {parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module"
+  }},
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,
 ];
