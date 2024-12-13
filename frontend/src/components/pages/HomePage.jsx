@@ -8,7 +8,6 @@ const HomePage = () => {
       <div className="row h-100 bg-white flex-md-row">
 
         <div className="text-center">
-          <span>Нет аккаунта?</span>
           <Link to="/login">Регистрация</Link>
         </div>
 
