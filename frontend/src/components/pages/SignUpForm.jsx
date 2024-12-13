@@ -1,6 +1,11 @@
 import { Formik, Form, Field } from 'formik';
 import registrationImage from '../../../public/registration.png';
 
+const submitForm = (values, { setSubmitting }) => {
+  console.log(values);
+  setSubmitting(false);
+};
+
 const SignUpForm = () => {
   return (
     <div class="container-fluid h-100">
@@ -11,15 +16,8 @@ const SignUpForm = () => {
               <div>
                 <img src={registrationImage} class="rounded-circle" alt="Регистрация" />
               </div>
-                <Formik initialValues={{ username: '', password: '', confirmPassword: '' }}
-                  onSubmit={(values, actions) => {
-                    /*setTimeout(() => {
-                      alert(JSON.stringify(values, null, 2));
-                      actions.setSubmitting(false);
-                    }, 1000);*/
-                  }}
-                >
-                  {() => (
+                <Formik initialValues={{ username: '', password: '', confirmPassword: '' }} onSubmit={submitForm}>
+                  {(errors, touched) => (
                     <Form className="w-50">
                       <h1 class="text-center mb-4">Регистрация</h1>
                       <div class="form-floating mb-3">
