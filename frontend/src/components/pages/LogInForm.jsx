@@ -1,22 +1,28 @@
+import { useState } from "react";
 import axios from 'axios';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import logInImage from '../../../public/logIn.jpg';
 
 const LogInForm = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState('');
+  const [buttonStatus, setStatus] = useState('');
 
   const submitForm = async ({ username, password }, { setSubmitting }) => {
     try {
       setSubmitting(true);
+      setStatus('disabled');
       const response = await axios.post('/api/v1/login', { username, password });
+      console.log(response, ' = response');
       const { token } = response.data;
       localStorage.setItem('token', token);
       localStorage.setItem('username', username);
       navigate('/');
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      setError(err.response.status);
     } finally {
+      setStatus('');
       setSubmitting(false);
     }
   };
@@ -26,12 +32,21 @@ const LogInForm = () => {
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
           <div className="card shadow-sm">
+            {!error
+              ? null
+              : <>
+                {error === 401
+                  ? <div className="error-message">Неверные имя пользователя или пароль</div>
+                  : <div className="invalid-tooltip">Неизвестная ошибка</div>
+                }
+              </>
+            }
             <div className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img src={logInImage} className="rounded-circle" alt="Войти" />
               </div>
               <Formik initialValues={{ username: '', password: '' }} onSubmit={submitForm}>
-                {(errors, touched) => (
+                {() => (
                   <Form className="col-12 col-md-6 mt-3 mt-md-0">
                     <h1 className="text-center mb-4">Войти</h1>
                     <div className="form-floating mb-3">
@@ -39,42 +54,30 @@ const LogInForm = () => {
                         name="username"
                         type="username"
                         autoComplete="username"
-                        className={`form-control ${
-                          errors.username && touched.username ? 'is-invalid' : ''
-                        }`}
+                        className={`form-control ${error ? 'is-invalid' : ''}`}
                         required
                         placeholder="Ваш ник"
                         id="username"
                       />
                       <label htmlFor="username">Ваш ник</label>
-                      <ErrorMessage
-                        component="div"
-                        name="username"
-                        className="invalid-feedback"
-                        value={errors.username}
-                      />
                     </div>
                     <div className="form-floating mb-4">
                       <Field
                         type="password"
                         name="password"
                         autoComplete="current-password"
-                        className={`form-control ${
-                          errors.password && touched.password ? 'is-invalid' : ''
-                        }`}
+                        className={`form-control ${error ? 'is-invalid' : ''}`}
                         required
                         placeholder="Пароль"
                         id="password"
                       />
                       <label className="form-label" htmlFor="password">Пароль</label>
-                      <ErrorMessage
-                        component="div"
-                        name="password"
-                        className="invalid-feedback"
-                        value={errors.password}
-                      />
                     </div>
-                    <button type="submit" className="w-100 mb-3 btn btn-outline-primary">Войти</button>
+                    <div>
+                      {/*!error ? null : { error === 401 ? (<div className="invalid-tooltip">Неверные имя пользователя или пароль</div>) : }*/}
+
+                    </div>
+                    <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>Войти</button>
                   </Form>
                 )}
               </Formik>
