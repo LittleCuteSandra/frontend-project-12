@@ -2,10 +2,17 @@ import { useState } from "react";
 import axios from 'axios';
 import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import validationFormSchema from '../../utils/formValidation.js';
+import * as Yup from 'yup';
+//import validationFormSchema from '../../utils/formValidation.js';
 import registrationImage from '../../../public/registration.png';
 
 const SignUpForm = () => {
+  const validationFormSchema = Yup.object().shape({
+    username: Yup.string().required('Обязательное поле').min(3, 'Минимум 3 буквы').max(20, 'Максимум 20 букв'),
+    password: Yup.string().required('Обязательное поле').min(6, 'Минимум 6 символов'),
+    confirmPassword: Yup.string().required('Обязательное поле').oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
+  });
+
   const navigate = useNavigate();
   const [error, setError] = useState('');
   const [buttonStatus, setStatus] = useState('');
