@@ -53,7 +53,7 @@ const SignUpForm = () => {
                 <img src={registrationImage} className="rounded-circle" alt="Регистрация" />
               </div>
               <Formik initialValues={{ username: '', password: '', confirmPassword: '' }} validationSchema={validationFormSchema} onSubmit={submitForm}>
-                {(errors, touched) => (
+                {({ errors, touched }) => (
                   <Form className="w-50">
                     <h1 className="text-center mb-4">Регистрация</h1>
                     <div className="form-floating mb-3">

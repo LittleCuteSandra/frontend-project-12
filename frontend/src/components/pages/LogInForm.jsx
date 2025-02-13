@@ -1,85 +1,88 @@
 import { useState } from "react";
-import axios from 'axios';
-import { Formik, Form, Field } from 'formik';
+import { Formik, useFormik } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
+import { FloatingLabel, Form } from 'react-bootstrap';
 import logInImage from '../../../public/logIn.jpg';
+import routes from '../../utils/routes.js';
+import { useLogInUserMutation } from '../../services/authorizationApi.js';
+import useAuth from '../../hooks/useAuth.js';
 
 const LogInForm = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState('');
-  const [buttonStatus, setStatus] = useState('');
+  const [submitError, setsubmitError] = useState('');
+  const [buttonStatus, setButtonStatus] = useState('');
+  const [logInUser, { isLoading }] = useLogInUserMutation();
+  //const { logIn } = useAuth();
 
-  const submitForm = async ({ username, password }, { setSubmitting }) => {
-    try {
-      setSubmitting(true);
-      setStatus('disabled');
-      const response = await axios.post('/api/v1/login', { username, password });
-      console.log(response, ' = response');
-      const { token } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('username', username);
-      navigate('/');
-    } catch (err) {
-      setError(err.response.status);
-    } finally {
-      setStatus('');
-      setSubmitting(false);
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: '',
+      password: '',
+    },
+    onSubmit: async ({ username, password }) => {
+      try {
+        setsubmitError(false);
+        setButtonStatus('disabled');
+        const response = await logInUser({ username, password });
+        // кастыльно! переделать
+        if (Object.hasOwn(response, 'error')) {
+          if (response.error.status === 401) setsubmitError(true);
+        } else {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('username', username);
+          navigate(routes.homePage());
+        }
+      } catch (err) {
+        //if (err.status === 401) {
+          //console.log('err.status in = ', err.status, typeof err.status);
+          //setsubmitError(true);
+        //}
+        console.log(err);
+      } finally {
+        setButtonStatus('');
+      }
+    },
+  });
 
   return (
     <div className='container-fluid h-100'>
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
           <div className="card shadow-sm">
-            {!error
-              ? null
-              : <>
-                {error === 401
-                  ? <div className="error-message">Неверные имя пользователя или пароль</div>
-                  : <div className="invalid-tooltip">Неизвестная ошибка</div>
-                }
-              </>
-            }
             <div className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img src={logInImage} className="rounded-circle" alt="Войти" />
               </div>
-              <Formik initialValues={{ username: '', password: '' }} onSubmit={submitForm}>
-                {() => (
-                  <Form className="col-12 col-md-6 mt-3 mt-md-0">
-                    <h1 className="text-center mb-4">Войти</h1>
-                    <div className="form-floating mb-3">
-                      <Field
-                        name="username"
-                        type="username"
-                        autoComplete="username"
-                        className={`form-control ${error ? 'is-invalid' : ''}`}
-                        required
-                        placeholder="Ваш ник"
-                        id="username"
-                      />
-                      <label htmlFor="username">Ваш ник</label>
-                    </div>
-                    <div className="form-floating mb-4">
-                      <Field
-                        type="password"
-                        name="password"
-                        autoComplete="current-password"
-                        className={`form-control ${error ? 'is-invalid' : ''}`}
-                        required
-                        placeholder="Пароль"
-                        id="password"
-                      />
-                      <label className="form-label" htmlFor="password">Пароль</label>
-                    </div>
-                    <div>
-                      {/*!error ? null : { error === 401 ? (<div className="invalid-tooltip">Неверные имя пользователя или пароль</div>) : }*/}
-
-                    </div>
-                    <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>Войти</button>
-                  </Form>
-                )}
+              <Formik>
+                <Form className='col-12 col-md-6 mt-3 mt-mb-0' onSubmit={formik.handleSubmit}>
+                  <h1 className='text-center mb-4'>Войти</h1>
+                  <FloatingLabel className="mb-4" controlId="username" label="Ваш ник">
+                    <Form.Control
+                      name="username"
+                      type="username"
+                      className="w-100"
+                      required
+                      isInvalid={submitError}
+                      value={formik.values.username}
+                      onChange={formik.handleChange}
+                    />
+                  </FloatingLabel>
+                  <FloatingLabel className="mb-4" controlId="password" label="Пароль">
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      className="w-100"
+                      required
+                      isInvalid={submitError}
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                        {submitError ? 'Неверные имя пользователя или пароль' : ''}
+                    </Form.Control.Feedback>
+                  </FloatingLabel>
+                  <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>Войти</button>
+                </Form>
               </Formik>
             </div>
             <div className="card-footer p-4">
@@ -96,3 +99,10 @@ const LogInForm = () => {
 };
 
 export default LogInForm;
+
+/*<Button
+  variant="primary"
+  type="submit"
+  disabled={isLoading}
+  className="w-100 border-primary bg-white text-primary"
+>Войти</Button>*/

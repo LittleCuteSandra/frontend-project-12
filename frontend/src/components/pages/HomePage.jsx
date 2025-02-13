@@ -8,7 +8,7 @@ const HomePage = () => {
       <div className="row h-100 bg-white flex-md-row">
 
         <div className="text-center">
-          <Link to="/signup">Регистрация</Link>
+          <Link to="/login">Регистрация</Link>
         </div>
 
         <ChannelsForm />
