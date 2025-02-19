@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import NotFoundPage from './pages/NotFound.jsx';
 import LogInForm from './pages/LogInForm.jsx';
@@ -8,21 +8,28 @@ import HomePage from './pages/HomePage.jsx';
 import routes from '../utils/routes.js';
 
 const App = () => {
+
+  const Private = ({ children }) => {
+    if (localStorage.getItem('token')) {
+      return children;
+    }
+    return (
+      <Navigate to={routes.logInPage()} replace={true} />
+    );
+  };
+
   return (
     <BrowserRouter>
-      <div className="d-flex flex-column h-100">
-        <nav className="shadow-sm navbar navbar-expand-lg navbar-light bg-white">
-          <div className="container">
-            <Link to={routes.homePage()} className="navbar-brand">Hexlet Chat</Link>
-          </div>
-        </nav>
-        <Routes>
-          <Route path={routes.notFoundPage()} element={<NotFoundPage />} />
-          <Route path={routes.logInPage()} element={<LogInForm />} />
-          <Route path={routes.signUpPage()} element={<SignUpForm />} />
-          <Route path={routes.homePage()} element={<HomePage />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path={routes.homePage()} element={
+          <Private>
+            <HomePage />
+          </Private>
+        }/>
+        <Route path={routes.logInPage()} element={<LogInForm />} />
+        <Route path={routes.signUpPage()} element={<SignUpForm />} />
+        <Route path={routes.notFoundPage()} element={<NotFoundPage />} />
+      </Routes>
       <ToastContainer />
     </BrowserRouter>
   );
