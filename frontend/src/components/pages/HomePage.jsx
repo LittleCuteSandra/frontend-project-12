@@ -1,16 +1,11 @@
 import ChannelsForm from '../ChannelsForm.jsx';
-
-import { Link } from 'react-router-dom';
+import Header from '../Header.jsx';
 
 const HomePage = () => {
   return (
-    <div className="container h-100 my-4 overflow-hidden rounded shadow">
-      <div className="row h-100 bg-white flex-md-row">
-
-        <div className="text-center">
-          <Link to="/login">Регистрация</Link>
-        </div>
-
+    <div className="h-100 bg-light">
+      <div className="d-flex flex-column h-100">
+        <Header />
         <ChannelsForm />
       </div>
     </div>
