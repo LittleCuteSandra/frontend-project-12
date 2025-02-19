@@ -15,7 +15,7 @@ const SignUpForm = () => {
   const [authorizError, setAuthorizError] = useState(false);
   const [buttonStatus, setButtonStatus] = useState('');
   const [signUpUser] = useSignUpUserMutation();
-  const { logIn } = useAuth();
+  const { makeUserLoggedIn } = useAuth();
   const inputEl = useRef(null);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const SignUpForm = () => {
         setServerError(true);
       }
     } else {
-      logIn(response.data);
+      makeUserLoggedIn(response.data);
       navigate(routes.homePage());
     }
     setButtonStatus('');

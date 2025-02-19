@@ -13,7 +13,7 @@ const LogInForm = () => {
   const [authorizError, setAuthorizError] = useState(false);
   const [buttonStatus, setButtonStatus] = useState('');
   const [logInUser] = useLogInUserMutation();
-  const { logIn } = useAuth();
+  const { makeUserLoggedIn } = useAuth();
   const inputEl = useRef(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ const LogInForm = () => {
         setServerError(true);
       }
     } else {
-      logIn(response.data);
+      makeUserLoggedIn(response.data);
       navigate(routes.homePage());
     }
     setButtonStatus('');
