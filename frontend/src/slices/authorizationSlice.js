@@ -1,54 +1,28 @@
-//import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-/*const initialState = {
-  //user: '',
-  token: localStorage.getItem('token') || null,
+const initialState = {
+  username: '',
+  token: localStorage.getItem('token') || '',
+  isLoggedIn: false,
 };
 
 const authorizationSlice = createSlice({
   name: 'authorization',
   initialState,
   reducers: {
-    logIn: (state, action) => {
-      
-    },
-    logOut: () => {
-
-    },
-  },
-});
-
-export const { } = authorizationSlice.actions;
-
-export default authorizationSlice.reducer;*/
-
-import { createSlice } from '@reduxjs/toolkit';
-
-const initialData = localStorage.getItem('userId') !== 'undefined'
-  ? JSON.parse(localStorage.getItem('userId'))
-  : null;
-
-const initialState = {
-  username: initialData ? initialData.username : '',
-  loggedIn: !!initialData,
-  token: initialData ? initialData.token : '',
-};
-
-const authorizationSlice = createSlice({
-  name: 'users',
-  initialState,
-  reducers: {
-    setlogInUser(state, { payload }) {
+    setUserLoggedIn: (state, { payload }) => {
       state.username = payload.username;
-      state.loggedIn = true;
       state.token = payload.token;
+      state.isLoggedIn = true;
     },
-    setlogOutUser(state) {
-      state.loggedIn = false;
-      state.token = null;
+    setUserLoggedOut: (state) => {
+      state.username = '';
+      state.token = '';
+      state.isLoggedIn = false;
     },
   },
 });
 
-export const { setlogInUser, setlogOutUser } = authorizationSlice.actions;
+export const { setUserLoggedIn, setUserLoggedOut } = authorizationSlice.actions;
+
 export default authorizationSlice.reducer;

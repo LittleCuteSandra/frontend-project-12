@@ -1,20 +1,20 @@
 import { useDispatch } from 'react-redux';
-import { setlogInUser, setlogOutUser } from '../slices/authorizationSlice.js';
+import { setUserLoggedIn, setUserLoggedOut } from '../slices/authorizationSlice.js';
 
 const useAuth = () => {
   const dispatch = useDispatch();
 
-  const logIn = (data) => {
-    localStorage.setItem('userId', JSON.stringify(data));
-    dispatch(setlogInUser(data));
+  const makeUserLoggedIn = ({username, token}) => {
+    localStorage.setItem('token', token);
+    dispatch(setUserLoggedIn({ username, token }));
   };
 
-  const logOut = () => {
-    localStorage.removeItem('userId');
-    dispatch(setlogOutUser());
+  const makeUserLoggedOut = () => {
+    localStorage.removeItem('token');
+    dispatch(setUserLoggedOut());
   };
 
-  return { logIn, logOut };
+  return { makeUserLoggedIn, makeUserLoggedOut };
 };
 
 export default useAuth;
