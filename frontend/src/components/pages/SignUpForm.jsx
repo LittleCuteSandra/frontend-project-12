@@ -1,37 +1,43 @@
-import { useState } from "react";
-import axios from 'axios';
-import { Formik, Form, Field } from 'formik';
+import { useState, useRef, useEffect } from "react";
+import { Formik, Field } from 'formik';
+import { FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import * as Yup from 'yup';
-//import validationFormSchema from '../../utils/formValidation.js';
+import { useSignUpUserMutation } from '../../services/authorizationApi.js';
+import useAuth from '../../hooks/useAuth.js';
+import routes from '../../utils/routes.js';
+import validationFormSchema from '../../utils/formValidation.js';
 import registrationImage from '../../../public/registration.png';
 
 const SignUpForm = () => {
-  const validationFormSchema = Yup.object().shape({
-    username: Yup.string().required('Обязательное поле').min(3, 'Минимум 3 буквы').max(20, 'Максимум 20 букв'),
-    password: Yup.string().required('Обязательное поле').min(6, 'Минимум 6 символов'),
-    confirmPassword: Yup.string().required('Обязательное поле').oneOf([Yup.ref('password'), null], 'Пароли должны совпадать'),
-  });
 
   const navigate = useNavigate();
-  const [error, setError] = useState('');
-  const [buttonStatus, setStatus] = useState('');
+  const [serverError, setServerError] = useState(false);
+  const [authorizError, setAuthorizError] = useState(false);
+  const [buttonStatus, setButtonStatus] = useState('');
+  const [signUpUser] = useSignUpUserMutation();
+  const { logIn } = useAuth();
+  const inputEl = useRef(null);
 
-  const submitForm = async ({ username, password }, { setSubmitting }) => {
-    try {
-      setSubmitting(true);
-      setStatus('disabled');
-      const response = await axios.post('/api/v1/signup', { username, password });
-      const { token } = response.data;
-      localStorage.setItem('token', token);
-      localStorage.setItem('username', username);
-      navigate('/');
-    } catch (err) {
-      setError(err.response.status);
-    } finally {
-      setStatus('');
-      setSubmitting(false);
+  useEffect(() => {
+    inputEl.current.focus();
+  }, []);
+
+  const submitForm = async (userData) => {
+    setAuthorizError(false);
+    setServerError(false);
+    setButtonStatus('disabled');
+    const response = await signUpUser(userData);
+    if (Object.hasOwn(response, 'error')) {
+      if (response.error.status === 409) {
+        setAuthorizError(true);
+      } else {
+        setServerError(true);
+      }
+    } else {
+      logIn(response.data);
+      navigate(routes.homePage());
     }
+    setButtonStatus('');
   };
 
   return (
@@ -39,59 +45,50 @@ const SignUpForm = () => {
       <div className="row justify-content-center align-content-center h-100">
         <div className="col-12 col-md-8 col-xxl-6">
           <div className="card shadow-sm">
-            {!error
-              ? null
-              : <>
-                {error === 409
-                  ? <div className="error-message">Уже авторизован</div>
-                  : <div className="error-message">Неизвестная ошибка</div>
-                }
-              </>
-            }
-            <div className="card-body d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
-              <div>
+            <div className="card-body row p-5">
+              <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img src={registrationImage} className="rounded-circle" alt="Регистрация" />
               </div>
               <Formik initialValues={{ username: '', password: '', confirmPassword: '' }} validationSchema={validationFormSchema} onSubmit={submitForm}>
-                {({ errors, touched }) => (
-                  <Form className="w-50">
+                {({ handleSubmit, errors, touched }) => (
+                  <Form className="w-50" onSubmit={handleSubmit}>
                     <h1 className="text-center mb-4">Регистрация</h1>
-                    <div className="form-floating mb-3">
+                    <FloatingLabel className="mb-3" controlId="username" label="Имя пользователя">
                       <Field
                         id="username"
                         type="text"
                         name="username"
-                        className={`form-control ${errors.username && touched.username ? 'is-invalid' : ''}`}
+                        className={`form-control ${errors.username && touched.username || authorizError || serverError ? 'is-invalid' : ''}`}
                         placeholder="Имя пользователя"
                         autoComplete="username"
+                        innerRef={inputEl}
                       />
-                      <label className="form-label" htmlFor="username">Имя пользователя</label>
                       {errors.username && touched.username && (<div className="invalid-feedback">{errors.username}</div>)}
-                    </div>
-                    <div className="form-floating mb-3">
+                    </FloatingLabel>
+                    <FloatingLabel className="mb-3" controlId="passwor" label="Пароль">
                       <Field
                         id="password"
                         type="password"
                         name="password"
-                        className={`form-control ${errors.password && touched.password ? 'is-invalid' : ''}`}
+                        className={`form-control ${errors.password && touched.password || authorizError || serverError ? 'is-invalid' : ''}`}
                         placeholder="Пароль"
                         autoComplete="new-password"
                       />
-                      <label className="form-label" htmlFor="password">Пароль</label>
                       {errors.password && touched.password && (<div className="invalid-feedback">{errors.password}</div>)}
-                    </div>
-                    <div className="form-floating mb-4">
+                    </FloatingLabel>
+                    <FloatingLabel className="mb-3" controlId="confirmPassword" label="Подтвердите пароль">
                       <Field
                         id="confirmPassword"
                         type="password"
                         name="confirmPassword"
-                        className={`form-control ${errors.confirmPassword && touched.confirmPassword ? 'is-invalid' : ''}`}
+                        className={`form-control ${errors.confirmPassword && touched.confirmPassword || authorizError || serverError ? 'is-invalid' : ''}`}
                         placeholder="Подтвердите пароль"
                         autoComplete="new-password"
                       />
-                      <label className="form-label" htmlFor="confirmPassword">Подтвердите пароль</label>
                       {errors.confirmPassword && touched.confirmPassword && (<div className="invalid-feedback">{errors.confirmPassword}</div>)}
-                    </div>
+                      {authorizError && (<div className="invalid-tooltip">Такой пользователь уже существует</div>)}
+                      {serverError && (<div className="invalid-tooltip">Ошибка сервера</div>)}
+                    </FloatingLabel>
                     <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>Зарегистрироваться</button>
                   </Form>
                 )}
