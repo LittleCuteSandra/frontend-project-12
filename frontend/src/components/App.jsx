@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import NotFoundPage from './pages/NotFound.jsx';
-import LogInForm from './pages/LogInForm.jsx';
-import SignUpForm from './pages/SignUpForm.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
+import LogInForm from './pages/LogInPage.jsx';
+import SignUpForm from './pages/SignUpPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import routes from '../utils/routes.js';
 

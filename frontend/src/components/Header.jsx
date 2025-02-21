@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import useAuth from '../hooks/useAuth';
 import routes from '../utils/routes.js';
 
 const Header = () => {
   const { makeUserLoggedOut } = useAuth();
   const navigate = useNavigate();
-  const isLoggedIn = localStorage.getItem('token') ? true : false;
+  const { isLoggedIn } = useSelector((state) => state.auth);
 
   const logOutUser = () => {
     makeUserLoggedOut();
