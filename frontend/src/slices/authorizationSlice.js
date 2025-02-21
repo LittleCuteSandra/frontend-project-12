@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   username: '',
   token: localStorage.getItem('token') || '',
+  isLoggedIn: localStorage.getItem('token') ? true : false,
 };
 
 const authorizationSlice = createSlice({
@@ -12,10 +13,12 @@ const authorizationSlice = createSlice({
     setUserLoggedIn: (state, { payload }) => {
       state.username = payload.username;
       state.token = payload.token;
+      state.isLoggedIn = true;
     },
     setUserLoggedOut: (state) => {
       state.username = '';
       state.token = '';
+      state.isLoggedIn = false;
     },
   },
 });
