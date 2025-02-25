@@ -5,7 +5,7 @@ import AddModal from '../modals/AddModal.jsx';
 import RemoveModal from '../modals/RemoveModal.jsx';
 import RenameModal from '../modals/RenameModal.jsx';
 import ChannelButton from './ChannelButton.jsx';
-import MessagesForm from '../MessagesForm.jsx';
+import MessagesForm from '../messagesComponents/MessagesForm.jsx';
 import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../../slices/channelsSlice.js';
 import { showModal } from '../../slices/modalSlice.js';

@@ -3,7 +3,9 @@ import Header from '../Header.jsx';
 import { useState, useEffect } from "react";
 import { Spinner } from 'react-bootstrap';
 import { useGetChannelsMutation } from '../../services/channelsApi.js';
+import { useGetMessagesMutation } from '../../services/messagesApi.js';
 import { setChannels } from '../../slices/channelsSlice.js';
+import { setMessages } from '../../slices/messagesSlice.js';
 import { useDispatch } from 'react-redux';
 import routes from '../../utils/routes.js';
 
@@ -11,12 +13,14 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const [dataisLoading, setDataLoading] = useState(true);
   const [getChannels] = useGetChannelsMutation();
+  const [getMessages] = useGetMessagesMutation();
 
-  useEffect(() => { // при авторизации, здесь происходит получение всех чатов и запись их в state channelsSlice
+  useEffect(() => {
     const fetchData = async () => {
-      const { data } = await getChannels(routes.channelsPath());
-      //здесь ещё добавить получение сообщений
-      dispatch(setChannels(data));
+      const channelResponse = await getChannels(routes.channelsPath());
+      dispatch(setChannels(channelResponse.data));
+      const messageResponse = await getMessages(routes.channelsPath());
+      dispatch(setMessages(messageResponse.data));
       setDataLoading(false);
     };
     fetchData();

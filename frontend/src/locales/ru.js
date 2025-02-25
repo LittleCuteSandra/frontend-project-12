@@ -47,7 +47,8 @@ export default {
       rename: 'Переименовать',
     },
     messages: {
-
+      send: 'Отправить',
+      input: 'Введите сообщение...',
     },
     notification: {
       add: 'Канал создан',
