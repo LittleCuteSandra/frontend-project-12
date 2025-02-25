@@ -49,5 +49,11 @@ export default {
     messages: {
 
     },
+    notification: {
+      add: 'Канал создан',
+      rename: 'Канал переименован',
+      delete: 'Канал удалён',
+      error: 'Ошибка соединения',
+    },
   },
 };

@@ -4,13 +4,13 @@ import { FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSignUpUserMutation } from '../../services/authorizationApi.js';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import useAuth from '../../hooks/useAuth.js';
 import routes from '../../utils/routes.js';
 import validationFormSchema from '../../utils/formValidation.js';
 import registrationImage from '../../../public/registration.png';
 
 const SignUpForm = () => {
-
   const navigate = useNavigate();
   const [serverError, setServerError] = useState(false);
   const [authorizError, setAuthorizError] = useState(false);
@@ -33,6 +33,7 @@ const SignUpForm = () => {
       if (response.error.status === 409) {
         setAuthorizError(true);
       } else {
+        toast.error(t('notification.error'));
         setServerError(true);
       }
     } else {
@@ -89,7 +90,6 @@ const SignUpForm = () => {
                       />
                       {errors.confirmPassword && touched.confirmPassword && (<div className="invalid-feedback">{errors.confirmPassword}</div>)}
                       {authorizError && (<div className="invalid-tooltip">{t('auth.sameUser')}</div>)}
-                      {serverError && (<div className="invalid-tooltip">{t('auth.serverError')}</div>)}
                     </FloatingLabel>
                     <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>{t('auth.signup')}</button>
                   </Form>

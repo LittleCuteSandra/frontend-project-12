@@ -3,6 +3,7 @@ import { Formik, Field } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import { FloatingLabel, Form } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import logInImage from '../../../public/logIn.jpg';
 import routes from '../../utils/routes.js';
 import { useLogInUserMutation } from '../../services/authorizationApi.js';
@@ -31,6 +32,7 @@ const LogInForm = () => {
       if (response.error.status === 401) {
         setAuthorizError(true);
       } else {
+        toast.error(t('notification.error'));
         setServerError(true);
       }
     } else {
@@ -74,7 +76,6 @@ const LogInForm = () => {
                         autoComplete="new-password"
                       />
                       {authorizError && (<div className="invalid-tooltip">{t('auth.userDataError')}</div>)}
-                      {serverError && (<div className="invalid-tooltip">{t('auth.serverError')}</div>)}
                     </FloatingLabel>
                     <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>{t('auth.enter')}</button>
                   </Form>

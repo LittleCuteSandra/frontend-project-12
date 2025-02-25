@@ -6,6 +6,7 @@ import { useAddChannelMutation } from '../../services/channelsApi.js';
 import channelValidationSchema from '../../utils/channelValidationSchema.js';
 import { setCurrentChannel, addChannelInStore } from '../../slices/channelsSlice.js';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { hideModal } from '../../slices/modalSlice.js';
 
 const AddModal = ({ show }) => {
@@ -27,10 +28,11 @@ const AddModal = ({ show }) => {
   const submitForm = async (channelData) => {
     const response = await addChannel(channelData);
     if (Object.hasOwn(response, 'error')) {
-      console.log(response.error);
+      toast.error(t('notification.error'));
     } else {
       dispatch(addChannelInStore(response.data));
       dispatch(setCurrentChannel(response.data.id));
+      toast.success(t('notification.add'));
       handleHide();
     }
   };

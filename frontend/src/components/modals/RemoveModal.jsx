@@ -1,6 +1,7 @@
 import {  useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../services/channelsApi.js';
 import { removeChannelInStore } from '../../slices/channelsSlice.js';
 import { setCurrentChannel } from '../../slices/channelsSlice.js';
@@ -19,13 +20,14 @@ const RemoveModal = ({show, channelID}) => {
   const submitModal = async () => {
     const response = await removeChannel(channelID);
     if (Object.hasOwn(response, 'error')) {
-      console.log(response.error);
+      toast.error(t('notification.error'));
     } else {
       dispatch(removeChannelInStore(response.data.id));
       handleHide();
       if (currentChannelID === response.data.id) { // если пользователь в момент удаления находится в этом чате его перекидывает на general
         dispatch(setCurrentChannel('1'));
       }
+      toast.success(t('notification.delete'));
       //добавить здесь еще удаление всех сообщений из этого канала
     }
   };

@@ -3,6 +3,7 @@ import { Formik, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { FloatingLabel, Form, Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 import { useEditChannelMutation } from '../../services/channelsApi.js';
 import channelValidationSchema from '../../utils/channelValidationSchema.js';
 import { renameChannelInStore } from '../../slices/channelsSlice.js';
@@ -27,10 +28,11 @@ const RenameModal = ({show, channelID}) => {
   const submitForm = async (newChannelData) => {
     const response = await editChannel({ id: channelID, body: newChannelData });
     if (Object.hasOwn(response, 'error')) {
-      console.log(response.error);
+      toast.error(t('notification.error'));
     } else {
       dispatch(renameChannelInStore({ id: response.data.id, name: response.data.name}));
       handleHide();
+      toast.success(t('notification.rename'));
     }
   };
 
