@@ -5,6 +5,7 @@ import { FloatingLabel, Form, Modal, Button } from 'react-bootstrap';
 import { useAddChannelMutation } from '../../services/channelsApi.js';
 import channelValidationSchema from '../../utils/channelValidationSchema.js';
 import { setCurrentChannel, addChannelInStore } from '../../slices/channelsSlice.js';
+import { useTranslation } from 'react-i18next';
 import { hideModal } from '../../slices/modalSlice.js';
 
 const AddModal = ({ show }) => {
@@ -12,6 +13,7 @@ const AddModal = ({ show }) => {
   const [addChannel] = useAddChannelMutation();
   const { channels } = useSelector((state) => state.channel);
   const channelsName = channels.map((channel) => channel.name);
+  const { t } = useTranslation();
   const inputEl = useRef(null);
 
   useEffect(() => {
@@ -36,13 +38,13 @@ const AddModal = ({ show }) => {
   return (
     <Modal show={show} onHide={handleHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Добавить канал</Modal.Title>
+        <Modal.Title>{t('channels.modal.addChannel')}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Formik initialValues={{ name: '' }} validationSchema={channelValidationSchema(channelsName)} onSubmit={submitForm}>
+        <Formik initialValues={{ name: '' }} validationSchema={channelValidationSchema(t, channelsName)} onSubmit={submitForm}>
           {({ handleSubmit, errors }) => (
             <Form onSubmit={handleSubmit}>
-              <FloatingLabel className="mb-3" controlId="name" label="Название канала">
+              <FloatingLabel className="mb-3" controlId="name" label={t('channels.modal.channelName')}>
                 <Field
                   id="name"
                   type="text"
@@ -53,8 +55,8 @@ const AddModal = ({ show }) => {
                 {errors.name && (<div className="invalid-feedback">{errors.name}</div>)}
               </FloatingLabel>
               <div className="d-flex justify-content-end">
-                <Button type="button" variant="secondary" className="me-2" onClick={handleHide}>Отменить</Button>
-                <Button type="submit" variant="primary">Отправить</Button>
+                <Button type="button" variant="secondary" className="me-2" onClick={handleHide}>{t('channels.modal.cancel')}</Button>
+                <Button type="submit" variant="primary">{t('channels.modal.send')}</Button>
               </div>
             </Form>
           )}

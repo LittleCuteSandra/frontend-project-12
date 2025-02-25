@@ -1,17 +1,10 @@
 import * as Yup from 'yup';
 
-const channelValidationSchema = (channels) => Yup.object().shape({
-  name: Yup.string().required('Обязательное поле')
-  .min(3, 'Минимум 3 буквы')
-  .max(20, 'Максимум 20 букв')
-  .notOneOf(channels, 'Названия каналов должны быть уникальными'),
+const channelValidationSchema = (t, channels) => Yup.object().shape({
+  name: Yup.string().required(t('validation.requiredField'))
+    .min(3, t('validation.minThree'))
+    .max(20, t('validation.maxTwenty'))
+    .notOneOf(channels, t('validation.uniqueName')),
 });
-
-/*export const newChannelSchema = (t, channels) => yup.object().shape({
-  body: yup.string().required(t('valid.required'))
-    .min(3, t('valid.minmax'))
-    .max(20, t('valid.minmax'))
-    .notOneOf(channels, t('valid.unique')),
-});*/
 
 export default channelValidationSchema;

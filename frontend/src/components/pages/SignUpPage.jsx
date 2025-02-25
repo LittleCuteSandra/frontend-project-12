@@ -3,6 +3,7 @@ import { Formik, Field } from 'formik';
 import { FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useSignUpUserMutation } from '../../services/authorizationApi.js';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth.js';
 import routes from '../../utils/routes.js';
 import validationFormSchema from '../../utils/formValidation.js';
@@ -16,6 +17,7 @@ const SignUpForm = () => {
   const [buttonStatus, setButtonStatus] = useState('');
   const [signUpUser] = useSignUpUserMutation();
   const { makeUserLoggedIn } = useAuth();
+  const { t } = useTranslation();
   const inputEl = useRef(null);
 
   useEffect(() => {
@@ -49,47 +51,47 @@ const SignUpForm = () => {
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
                 <img src={registrationImage} className="rounded-circle" alt="Регистрация" />
               </div>
-              <Formik initialValues={{ username: '', password: '', confirmPassword: '' }} validationSchema={validationFormSchema} onSubmit={submitForm}>
+              <Formik initialValues={{ username: '', password: '', confirmPassword: '' }} validationSchema={validationFormSchema(t)} onSubmit={submitForm}>
                 {({ handleSubmit, errors, touched }) => (
                   <Form className="w-50" onSubmit={handleSubmit}>
-                    <h1 className="text-center mb-4">Регистрация</h1>
-                    <FloatingLabel className="mb-3" controlId="username" label="Имя пользователя">
+                    <h1 className="text-center mb-4">{t('auth.regist')}</h1>
+                    <FloatingLabel className="mb-3" controlId="username" label={t('auth.userName')}>
                       <Field
                         id="username"
                         type="text"
                         name="username"
                         className={`form-control ${errors.username && touched.username || authorizError || serverError ? 'is-invalid' : ''}`}
-                        placeholder="Имя пользователя"
+                        placeholder={t('auth.userName')}
                         autoComplete="username"
                         innerRef={inputEl}
                       />
                       {errors.username && touched.username && (<div className="invalid-feedback">{errors.username}</div>)}
                     </FloatingLabel>
-                    <FloatingLabel className="mb-3" controlId="passwor" label="Пароль">
+                    <FloatingLabel className="mb-3" controlId="passwor" label={t('auth.password')}>
                       <Field
                         id="password"
                         type="password"
                         name="password"
                         className={`form-control ${errors.password && touched.password || authorizError || serverError ? 'is-invalid' : ''}`}
-                        placeholder="Пароль"
+                        placeholder={t('auth.password')}
                         autoComplete="new-password"
                       />
                       {errors.password && touched.password && (<div className="invalid-feedback">{errors.password}</div>)}
                     </FloatingLabel>
-                    <FloatingLabel className="mb-3" controlId="confirmPassword" label="Подтвердите пароль">
+                    <FloatingLabel className="mb-3" controlId="confirmPassword" label={t('auth.repeatPassword')}>
                       <Field
                         id="confirmPassword"
                         type="password"
                         name="confirmPassword"
                         className={`form-control ${errors.confirmPassword && touched.confirmPassword || authorizError || serverError ? 'is-invalid' : ''}`}
-                        placeholder="Подтвердите пароль"
+                        placeholder={t('auth.repeatPassword')}
                         autoComplete="new-password"
                       />
                       {errors.confirmPassword && touched.confirmPassword && (<div className="invalid-feedback">{errors.confirmPassword}</div>)}
-                      {authorizError && (<div className="invalid-tooltip">Такой пользователь уже существует</div>)}
-                      {serverError && (<div className="invalid-tooltip">Ошибка сервера</div>)}
+                      {authorizError && (<div className="invalid-tooltip">{t('auth.sameUser')}</div>)}
+                      {serverError && (<div className="invalid-tooltip">{t('auth.serverError')}</div>)}
                     </FloatingLabel>
-                    <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>Зарегистрироваться</button>
+                    <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>{t('auth.signup')}</button>
                   </Form>
                 )}
               </Formik>

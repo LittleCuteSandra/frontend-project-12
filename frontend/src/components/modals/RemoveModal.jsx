@@ -1,5 +1,6 @@
 import {  useSelector, useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useRemoveChannelMutation } from '../../services/channelsApi.js';
 import { removeChannelInStore } from '../../slices/channelsSlice.js';
 import { setCurrentChannel } from '../../slices/channelsSlice.js';
@@ -7,6 +8,7 @@ import { hideModal } from '../../slices/modalSlice.js';
 
 const RemoveModal = ({show, channelID}) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const [removeChannel] = useRemoveChannelMutation();
   const { currentChannelID } = useSelector((state) => state.channel);
 
@@ -31,12 +33,12 @@ const RemoveModal = ({show, channelID}) => {
   return (
     <Modal show={show} onHide={handleHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Удалить канал</Modal.Title>
+        <Modal.Title>{t('channels.modal.deleteChannel')}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>Уверены?</Modal.Body>
+      <Modal.Body>{t('channels.modal.sure')}</Modal.Body>
       <Modal.Footer>
-        <Button type="button" variant="secondary" className="me-2" onClick={handleHide}>Отменить</Button>
-        <Button type="submit" variant="danger" onClick={submitModal}>Удалить</Button>
+        <Button type="button" variant="secondary" className="me-2" onClick={handleHide}>{t('channels.modal.cancel')}</Button>
+        <Button type="submit" variant="danger" onClick={submitModal}>{t('channels.modal.delete')}</Button>
       </Modal.Footer>
     </Modal>
   );

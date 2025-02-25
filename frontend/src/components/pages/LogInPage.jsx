@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Formik, Field } from 'formik';
 import { Link, useNavigate } from 'react-router-dom';
 import { FloatingLabel, Form } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import logInImage from '../../../public/logIn.jpg';
 import routes from '../../utils/routes.js';
 import { useLogInUserMutation } from '../../services/authorizationApi.js';
@@ -14,6 +15,7 @@ const LogInForm = () => {
   const [buttonStatus, setButtonStatus] = useState('');
   const [logInUser] = useLogInUserMutation();
   const { makeUserLoggedIn } = useAuth();
+  const { t } = useTranslation();
   const inputEl = useRef(null);
 
   useEffect(() => {
@@ -45,44 +47,44 @@ const LogInForm = () => {
           <div className="card shadow-sm">
             <div className="card-body row p-5">
               <div className="col-12 col-md-6 d-flex align-items-center justify-content-center">
-                <img src={logInImage} className="rounded-circle" alt="Войти" />
+                <img src={logInImage} className="rounded-circle" alt={t('auth.enter')} />
               </div>
               <Formik initialValues={{ username: '', password: '' }} onSubmit={submitForm}>
                 {({ handleSubmit }) => (
                   <Form className="w-50" onSubmit={handleSubmit}>
-                    <h1 className="text-center mb-4">Войти</h1>
-                    <FloatingLabel className="mb-3" controlId="username" label="Имя пользователя">
+                    <h1 className="text-center mb-4">{t('auth.enter')}</h1>
+                    <FloatingLabel className="mb-3" controlId="username" label={t('auth.userName')}>
                       <Field
                         id="username"
                         type="text"
                         name="username"
                         className={`form-control ${authorizError || serverError ? 'is-invalid' : ''}`}
-                        placeholder="Имя пользователя"
+                        placeholder={t('auth.userName')}
                         autoComplete="username"
                         innerRef={inputEl}
                       />
                     </FloatingLabel>
-                    <FloatingLabel className="mb-3" controlId="passwor" label="Пароль">
+                    <FloatingLabel className="mb-3" controlId="passwor" label={t('auth.password')}>
                       <Field
                         id="password"
                         type="password"
                         name="password"
                         className={`form-control ${authorizError || serverError ? 'is-invalid' : ''}`}
-                        placeholder="Пароль"
+                        placeholder={t('auth.password')}
                         autoComplete="new-password"
                       />
-                      {authorizError && (<div className="invalid-tooltip">Неверные имя пользователя или пароль</div>)}
-                      {serverError && (<div className="invalid-tooltip">Ошибка сервера</div>)}
+                      {authorizError && (<div className="invalid-tooltip">{t('auth.userDataError')}</div>)}
+                      {serverError && (<div className="invalid-tooltip">{t('auth.serverError')}</div>)}
                     </FloatingLabel>
-                    <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>Войти</button>
+                    <button type="submit" className={`w-100 btn btn-outline-primary ${buttonStatus}`}>{t('auth.enter')}</button>
                   </Form>
                 )}
               </Formik>
             </div>
             <div className="card-footer p-4">
               <div className="text-center">
-                <span>Нет аккаунта? </span>
-                <Link to="/signup">Регистрация</Link>
+                <span>{t('auth.notHaveaccount')}</span>
+                <Link to="/signup">{t('auth.regist')}</Link>
               </div>
             </div>
           </div>
