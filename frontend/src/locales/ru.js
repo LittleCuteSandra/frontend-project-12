@@ -27,7 +27,7 @@ export default {
     },
     header: {
       exit: 'Выйти',
-      name: 'Мой чат',
+      name: 'Hexlet Chat',
     },
     channels: {
       modal: {
