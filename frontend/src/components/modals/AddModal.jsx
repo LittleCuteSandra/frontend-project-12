@@ -31,7 +31,6 @@ const AddModal = ({ show }) => {
     if (Object.hasOwn(response, 'error')) {
       toast.error(t('notification.error'));
     } else {
-      dispatch(addChannelInStore(response.data));
       dispatch(setCurrentChannel(response.data.id));
       toast.success(t('notification.add'));
       handleHide();

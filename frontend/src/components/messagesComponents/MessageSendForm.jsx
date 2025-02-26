@@ -5,11 +5,9 @@ import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import filter from 'leo-profanity';
-import { addMessageInStore } from '../../slices/messagesSlice.js';
 import { useAddMessageMutation } from '../../services/messagesApi.js';
 
 const MessageSendForm = ({ currentChannelID }) => {
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [buttonStatus, setButtonStatus] = useState('');
   const [inputMessage, setInputMessage] = useState('');
@@ -27,8 +25,6 @@ const MessageSendForm = ({ currentChannelID }) => {
     const response = await addMessage(dataForServer);
     if (Object.hasOwn(response, 'error')) {
       toast.error(t('notification.error'));
-    } else {
-      dispatch(addMessageInStore(response.data));
     }
     setInputMessage('');
     setButtonStatus('');

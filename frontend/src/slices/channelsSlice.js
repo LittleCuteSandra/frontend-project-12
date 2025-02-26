@@ -19,7 +19,7 @@ const channelsSlice = createSlice({
       state.channels = [...state.channels, payload];
     },
     removeChannelInStore: (state, { payload }) => {
-      // ещё удаление всех сообщений этого канала добавить
+      console.log(payload);
       state.channels = state.channels.filter((channel) => channel.id !== payload);
     },
     renameChannelInStore: (state, { payload }) => {

@@ -30,7 +30,6 @@ const RenameModal = ({show, channelID}) => {
     if (Object.hasOwn(response, 'error')) {
       toast.error(t('notification.error'));
     } else {
-      dispatch(renameChannelInStore({ id: response.data.id, name: response.data.name}));
       handleHide();
       toast.success(t('notification.rename'));
     }

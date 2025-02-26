@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import store from '../slices/index.js';
+import { useEffect } from "react";
+import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import io from 'socket.io-client';
 import { addMessageInStore } from '../slices/messagesSlice.js';
+import { addChannelInStore, removeChannelInStore, renameChannelInStore } from '../slices/channelsSlice.js';
 import filter from 'leo-profanity';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import LogInForm from './pages/LogInPage.jsx';
@@ -18,36 +20,41 @@ const rollbar = {
 };
 //rollbar.reportMessage("Timeout connecting to database");
 
-const socket = io();
-
-/*socket.on('newChannel', (channel) => {
-  store.dispatch(newChannel(channel));
-  toast.success(i18nextInstance.t('toasts.create'), { closeOnClick: true, toastId: '1' });
-});
-socket.on('removeChannel', ({ id }) => {
-  const { active } = store.getState().channels;
-  if (active === id) store.dispatch(setActive('1'));
-  store.dispatch(removeChannel(id));
-  toast.success(i18nextInstance.t('toasts.delete'), { toastId: '2' });
-});
-socket.on('renameChannel', (channel) => {
-  const changes = { name: channel.name };
-  store.dispatch(updateChannel({ id: channel.id, changes }));
-  toast.success(i18nextInstance.t('toasts.edit'), { toastId: '3' });
-});*/
-socket.on('addMessageInStore', (message) => {
-  store.dispatch(addMessageInStore(message));
-});
-/*socket.on('removeMessage', ({ id }) => {
-  store.dispatch(removeMessage(id));
-});*/
-
 const App = () => {
+  let socket = io();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    socket.on('newMessage', (message) => {
+      dispatch(addMessageInStore(message));
+    });
+
+    socket.on('removeChannel', (channelId) => {
+      console.log('тут');
+      dispatch(removeChannelInStore(channelId)); // тут не работатет
+    });
+
+    socket.on('renameChannel', (updatedChannel) => {
+      dispatch(renameChannelInStore(updatedChannel));
+    });
+
+    socket.on('newChannel', (channel) => {
+      dispatch(addChannelInStore(channel));
+    });
+
+    return () => {
+      socket.off('newMessage');
+      socket.off('removeChannel');
+      socket.off('renameChannel');
+      socket.off('newChannel');
+    };
+  }, [dispatch]);
+
   filter.loadDictionary('en');
   const ruLng = filter.getDictionary('ru');
   filter.add(ruLng);
-  //LeoProfanity.remove('boob');
-  //LeoProfanity.add('boobs');
+  //filter.remove('boob');
+  //filter.add('boobs');
 
   const Private = ({ children }) => {
     if (localStorage.getItem('token')) {
@@ -67,7 +74,7 @@ const App = () => {
   return (
     <RollBarProvider config={rollbar}>
       <ErrorBoundary>
-        
+
         <BrowserRouter>
           <Routes>
             <Route path={routes.homePage()} element={
