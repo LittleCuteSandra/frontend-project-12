@@ -6,6 +6,7 @@ import { useAddChannelMutation } from '../../services/channelsApi.js';
 import channelValidationSchema from '../../utils/channelValidationSchema.js';
 import { setCurrentChannel, addChannelInStore } from '../../slices/channelsSlice.js';
 import { useTranslation } from 'react-i18next';
+import leoProfanity from 'leo-profanity';
 import { toast } from 'react-toastify';
 import { hideModal } from '../../slices/modalSlice.js';
 
@@ -25,8 +26,8 @@ const AddModal = ({ show }) => {
     dispatch(hideModal());
   };
 
-  const submitForm = async (channelData) => {
-    const response = await addChannel(channelData);
+  const submitForm = async ({ name }) => {
+    const response = await addChannel({ name: leoProfanity.clean(name.trim()) });
     if (Object.hasOwn(response, 'error')) {
       toast.error(t('notification.error'));
     } else {

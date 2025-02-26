@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import filter from 'leo-profanity';
 import { addMessageInStore } from '../../slices/messagesSlice.js';
 import { useAddMessageMutation } from '../../services/messagesApi.js';
 
@@ -21,7 +22,7 @@ const MessageSendForm = ({ currentChannelID }) => {
 
   const submitForm = async () => {
     setButtonStatus('disabled');
-    const body = inputMessage.trim();
+    const body = filter.clean(inputMessage.trim());
     const dataForServer = { body, channelId: currentChannelID, username: localStorage.getItem('username') };
     const response = await addMessage(dataForServer);
     if (Object.hasOwn(response, 'error')) {
