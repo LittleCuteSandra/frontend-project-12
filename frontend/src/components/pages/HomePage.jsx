@@ -24,7 +24,7 @@ const HomePage = () => {
       setDataLoading(false);
     };
     fetchData();
-  }, []);
+  }, [dispatch, getChannels, getMessages]);
 
   return (
     <div className="h-100 bg-light">
@@ -32,8 +32,8 @@ const HomePage = () => {
         (
           <div className="d-flex flex-column h-100">
             <Header />
-            <div class="container h-100 my-4 overflow-hidden rounded shadow">
-              <div class="row h-100 bg-white flex-md-row">
+            <div className="container h-100 my-4 overflow-hidden rounded shadow">
+              <div className="row h-100 bg-white flex-md-row">
                 <ChannelsForm />
               </div>
             </div>

@@ -13,11 +13,11 @@ const MessagesForm = () => {
   const needMessages = messages.filter((message) => message.channelId === currentChannelID);
 
   return (
-    <div class="col p-0 h-100">
-      <div class="d-flex flex-column h-100">
+    <div className="col p-0 h-100">
+      <div className="d-flex flex-column h-100">
         <MessagesHeader name={name} messagesNumber={needMessages.length} />
-        <div id="messages-box" class="chat-messages overflow-auto px-5 ">
-          {needMessages.map((message) => <Message message={message}/>)}
+        <div id="messages-box" className="chat-messages overflow-auto px-5 ">
+          {needMessages.map((message) => <Message key={message.id} message={message}/>)}
         </div>
         <MessageSendForm currentChannelID={currentChannelID} />
       </div>

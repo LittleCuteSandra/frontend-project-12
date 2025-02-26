@@ -1,6 +1,6 @@
-const Message = ({ message }) => {
+const Message = ({ key, message }) => {
   return (
-    <div class="text-break mb-2">
+    <div key={key} className="text-break mb-2">
       <b>{message.username}</b>
       : {message.body}
     </div>

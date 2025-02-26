@@ -1,6 +1,6 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import store from '../slices/index.js';
 import 'react-toastify/dist/ReactToastify.css';
 import io from 'socket.io-client';
 import { addMessageInStore } from '../slices/messagesSlice.js';
@@ -16,6 +16,7 @@ const rollbar = {
   accessToken: localStorage.getItem('token'),
   environment: 'testenv',
 };
+//rollbar.reportMessage("Timeout connecting to database");
 
 const socket = io();
 
@@ -57,9 +58,16 @@ const App = () => {
     );
   };
 
+  /*function TestError() {
+    const b = null;
+    return b.hello(); <TestError />
+  }*/
+
+
   return (
     <RollBarProvider config={rollbar}>
       <ErrorBoundary>
+        
         <BrowserRouter>
           <Routes>
             <Route path={routes.homePage()} element={

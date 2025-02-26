@@ -35,7 +35,7 @@ const MessageSendForm = ({ currentChannelID }) => {
   };
 
   return (
-    <div class="mt-auto px-5 py-3">
+    <div className="mt-auto px-5 py-3">
       <Formik initialValues={{ body: '' }} onSubmit={submitForm}>
         {({ handleSubmit }) => (
           <Form className="py-1 border rounded-2" onSubmit={handleSubmit}>
