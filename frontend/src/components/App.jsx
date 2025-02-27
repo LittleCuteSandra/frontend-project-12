@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
 import io from 'socket.io-client';
 import { addMessageInStore } from '../slices/messagesSlice.js';
-import { addChannelInStore, removeChannelInStore, renameChannelInStore } from '../slices/channelsSlice.js';
+import { addChannelInStore, renameChannelInStore } from '../slices/channelsSlice.js';
 import filter from 'leo-profanity';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import LogInForm from './pages/LogInPage.jsx';
@@ -29,10 +29,10 @@ const App = () => {
       dispatch(addMessageInStore(message));
     });
 
-    socket.on('removeChannel', (channelId) => {
+    /*socket.on('removeChannel', (channelId) => {
       console.log('тут');
       dispatch(removeChannelInStore(channelId)); // тут не работатет
-    });
+    });*/
 
     socket.on('renameChannel', (updatedChannel) => {
       dispatch(renameChannelInStore(updatedChannel));

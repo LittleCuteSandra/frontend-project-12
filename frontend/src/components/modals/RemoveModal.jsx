@@ -22,7 +22,7 @@ const RemoveModal = ({show, channelID}) => {
     if (Object.hasOwn(response, 'error')) {
       toast.error(t('notification.error'));
     } else {
-      //dispatch(removeChannelInStore(response.data.id));
+      dispatch(removeChannelInStore(response.data.id));
       dispatch(removeMessagesInStore(response.data.id));
       handleHide();
       if (currentChannelID === response.data.id) {

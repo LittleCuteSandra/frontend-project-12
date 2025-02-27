@@ -29,17 +29,21 @@ const ChannelsForm = () => {
       'btn-secondary': isChannelActive,
     });
     return (<ListGroup.Item as="il" key={channel.id} action className="nav-item w-100">
-      <Dropdown as={ButtonGroup} className="d-flex">
+      {channel.removable ? (<Dropdown as={ButtonGroup} className="d-flex">
         <button type="button" className={btnClass} onClick={isChannelActive ? null : setChannelActive}>
           <span className="me-1">#</span>
           {channel.name}
         </button>
         {channel.removable && <ChannelButton isChannelActive={isChannelActive} channelId={channel.id} />}
-      </Dropdown>
+      </Dropdown>) : (<button type="button" className={btnClass} onClick={isChannelActive ? null : setChannelActive}>
+        <span className="me-1">#</span>
+        {channel.name}
+      </button>)}
     </ListGroup.Item>);
   };
 
   const { type, isShown, channelID } = useSelector((state) => state.modal);
+  console.log('channels = ', channels);
 
   return (
     <>
@@ -56,8 +60,8 @@ const ChannelsForm = () => {
       </div>
       <MessagesForm />
       {type === 'add' && isShown && <AddModal show={isShown} />}
-      {type === 'remove' && isShown && <RemoveModal show={isShown} channelID = {channelID} /> }
-      {type === 'rename' && isShown && <RenameModal show={isShown} channelID={channelID} /> }
+      {type === 'remove' && isShown && <RemoveModal show={isShown} channelID={channelID} />}
+      {type === 'rename' && isShown && <RenameModal show={isShown} channelID={channelID} />}
     </>
   );
 };
