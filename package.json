@@ -2,11 +2,12 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "description": "project Slack",
-  "main": "src/index.jsx",
+  "main": "frontend/src/index.jsx",
   "scripts": {
     "build": "npm run build --prefix frontend",
     "start": "npx start-server -s ./frontend/dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "cd frontend && npm ci"
   },
   "repository": {
     "type": "git",
@@ -22,8 +23,5 @@
     "@hexlet/chat-server": "^2.0.4",
     "@reduxjs/toolkit": "^2.5.1",
     "leo-profanity": "^1.7.0"
-  },
-  "devDependencies": {
-    "vite": "^6.2.0"
   }
 }
