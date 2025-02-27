@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { FloatingLabel, Form, Modal, Button } from 'react-bootstrap';
 import { useAddChannelMutation } from '../../services/channelsApi.js';
 import channelValidationSchema from '../../utils/channelValidationSchema.js';
-import { setCurrentChannel, addChannelInStore } from '../../slices/channelsSlice.js';
+import { setCurrentChannel } from '../../slices/channelsSlice.js';
 import { useTranslation } from 'react-i18next';
 import leoProfanity from 'leo-profanity';
 import { toast } from 'react-toastify';

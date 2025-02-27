@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useEditChannelMutation } from '../../services/channelsApi.js';
 import channelValidationSchema from '../../utils/channelValidationSchema.js';
-import { renameChannelInStore } from '../../slices/channelsSlice.js';
 import { hideModal } from '../../slices/modalSlice.js';
 
 const RenameModal = ({show, channelID}) => {
