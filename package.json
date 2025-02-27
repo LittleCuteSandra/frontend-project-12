@@ -22,5 +22,8 @@
     "@hexlet/chat-server": "^2.0.4",
     "@reduxjs/toolkit": "^2.5.1",
     "leo-profanity": "^1.7.0"
+  },
+  "devDependencies": {
+    "vite": "^6.2.0"
   }
 }
