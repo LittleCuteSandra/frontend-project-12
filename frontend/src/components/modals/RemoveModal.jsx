@@ -25,8 +25,8 @@ const RemoveModal = ({ show, channelID }) => {
       toast.error(t('notification.error'));
     } else {
       messages.filter((message) => message.channelId === channelID).forEach(async (message) => {
-        const response = await removeMessage(message.id);
-        if (Object.hasOwn(response, 'error')) {
+        const messageResponse = await removeMessage(message.id);
+        if (Object.hasOwn(messageResponse, 'error')) {
           toast.error(t('notification.error'));
         }
       });

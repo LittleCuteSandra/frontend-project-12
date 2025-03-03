@@ -15,7 +15,7 @@ const MessagesForm = () => {
       <div className="d-flex flex-column h-100">
         <MessagesHeader name={needChannel ? needChannel.name : null} messagesNumber={needMessages.length} />
         <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-          {needMessages.map((message) => <Message key={message.id} message={message}/>)}
+          {needMessages.map((message) => <Message key={message.id} message={message} />)}
         </div>
         <MessageSendForm currentChannelID={currentChannelID} />
       </div>

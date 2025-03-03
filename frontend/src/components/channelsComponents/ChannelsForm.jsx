@@ -1,12 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { ListGroup, Button, Dropdown, ButtonGroup } from 'react-bootstrap';
+import {
+  ListGroup, Button, Dropdown, ButtonGroup
+} from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import AddModal from '../modals/AddModal.jsx';
 import RemoveModal from '../modals/RemoveModal.jsx';
 import RenameModal from '../modals/RenameModal.jsx';
 import ChannelButton from './ChannelButton.jsx';
 import MessagesForm from '../messagesComponents/MessagesForm.jsx';
-import { useTranslation } from 'react-i18next';
 import { setCurrentChannel } from '../../slices/channelsSlice.js';
 import { showModal } from '../../slices/modalSlice.js';
 
@@ -28,15 +30,17 @@ const ChannelsForm = () => {
     const btnClass = cn('w-100', 'rounded-0', 'text-start', 'text-truncate', 'btn', {
       'btn-secondary': isChannelActive,
     });
-    return (<ListGroup.Item as="il" key={channel.id} action className="nav-item w-100">
-      <Dropdown as={ButtonGroup} className="d-flex">
-        <button type="button" className={btnClass} onClick={isChannelActive ? null : setChannelActive}>
-          <span className="me-1">#</span>
-          {channel.name}
-        </button>
-        {channel.removable && <ChannelButton isChannelActive={isChannelActive} channelId={channel.id} />}
-      </Dropdown>
-    </ListGroup.Item>);
+    return (
+      <ListGroup.Item as="il" key={channel.id} action className="nav-item w-100">
+        <Dropdown as={ButtonGroup} className="d-flex">
+          <button type="button" className={btnClass} onClick={isChannelActive ? null : setChannelActive}>
+            <span className="me-1">#</span>
+            {channel.name}
+          </button>
+          {channel.removable && <ChannelButton isChannelActive={isChannelActive} channelId={channel.id} />}
+        </Dropdown>
+      </ListGroup.Item>
+    );
   };
 
   const { type, isShown, channelID } = useSelector((state) => state.modal);

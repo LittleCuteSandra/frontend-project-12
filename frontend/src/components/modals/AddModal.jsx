@@ -1,13 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 import { Formik, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-import { FloatingLabel, Form, Modal, Button } from 'react-bootstrap';
+import {
+  FloatingLabel, Form, Modal, Button
+} from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import leoProfanity from 'leo-profanity';
 import { useAddChannelMutation } from '../../services/channelsApi.js';
 import channelValidationSchema from '../../utils/channelValidationSchema.js';
 import { setCurrentChannel } from '../../slices/channelsSlice.js';
-import { useTranslation } from 'react-i18next';
-import leoProfanity from 'leo-profanity';
-import { toast } from 'react-toastify';
 import { hideModal } from '../../slices/modalSlice.js';
 
 const AddModal = ({ show }) => {

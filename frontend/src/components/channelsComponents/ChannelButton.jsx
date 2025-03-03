@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import { showModal } from '../../slices/modalSlice.js';
 
-const ChannelButton = ({isChannelActive, channelId}) => {
+const ChannelButton = ({ isChannelActive, channelId }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 

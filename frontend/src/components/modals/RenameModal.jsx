@@ -1,14 +1,16 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 import { Formik, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-import { FloatingLabel, Form, Modal, Button } from 'react-bootstrap';
+import {
+  FloatingLabel, Form, Modal, Button
+} from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useEditChannelMutation } from '../../services/channelsApi.js';
 import channelValidationSchema from '../../utils/channelValidationSchema.js';
 import { hideModal } from '../../slices/modalSlice.js';
 
-const RenameModal = ({show, channelID}) => {
+const RenameModal = ({ show, channelID }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [editChannel] = useEditChannelMutation();
