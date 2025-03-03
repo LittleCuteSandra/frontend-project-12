@@ -16,7 +16,7 @@ export default {
       serverError: 'Ошибка сервера',
       userDataError: 'Неверные имя пользователя или пароль',
       regist: 'Регистрация',
-      userName: 'Имя пользователя',
+      userName: 'Ваш ник',
       password: 'Пароль',
       repeatPassword: 'Подтвердите пароль',
       sameUser: 'Такой пользователь уже существует',
