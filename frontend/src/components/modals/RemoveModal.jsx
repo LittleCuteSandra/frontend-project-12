@@ -3,15 +3,17 @@ import { Modal, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import { useRemoveChannelMutation } from '../../services/channelsApi.js';
-import { removeChannelInStore, setCurrentChannel } from '../../slices/channelsSlice.js';
-import { removeMessagesInStore } from '../../slices/messagesSlice.js';
+import { useRemoveMessageMutation } from '../../services/messagesApi.js';
+import { setCurrentChannel } from '../../slices/channelsSlice.js';
 import { hideModal } from '../../slices/modalSlice.js';
 
-const RemoveModal = ({show, channelID}) => {
+const RemoveModal = ({ show, channelID }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const [removeChannel] = useRemoveChannelMutation();
+  const [removeMessage] = useRemoveMessageMutation();
   const { currentChannelID } = useSelector((state) => state.channel);
+  const { messages } = useSelector((state) => state.message);
 
   const handleHide = () => {
     dispatch(hideModal());
@@ -22,8 +24,12 @@ const RemoveModal = ({show, channelID}) => {
     if (Object.hasOwn(response, 'error')) {
       toast.error(t('notification.error'));
     } else {
-      dispatch(removeChannelInStore(response.data.id));
-      dispatch(removeMessagesInStore(response.data.id));
+      messages.filter((message) => message.channelId === channelID).forEach(async (message) => {
+        const response = await removeMessage(message.id);
+        if (Object.hasOwn(response, 'error')) {
+          toast.error(t('notification.error'));
+        }
+      });
       handleHide();
       if (currentChannelID === response.data.id) {
         dispatch(setCurrentChannel('1'));
