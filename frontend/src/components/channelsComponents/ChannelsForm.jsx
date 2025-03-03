@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  ListGroup, Button, Dropdown, ButtonGroup
+  ListGroup, Button, Dropdown, ButtonGroup,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
@@ -37,7 +37,11 @@ const ChannelsForm = () => {
             <span className="me-1">#</span>
             {channel.name}
           </button>
-          {channel.removable && <ChannelButton isChannelActive={isChannelActive} channelId={channel.id} />}
+          {channel.removable && <ChannelButton 
+            isChannelActive={isChannelActive}
+            channelId={channel.id}
+            />
+          }
         </Dropdown>
       </ListGroup.Item>
     );
