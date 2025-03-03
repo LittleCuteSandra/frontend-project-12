@@ -16,5 +16,5 @@ root.render(
         <App />
       </Provider>
     </I18nextProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

@@ -5,15 +5,15 @@ import ru from './locales/ru.js';
 i18next
   .use(initReactI18next)
   .init({
-    lng: 'ru', // Текущий язык
-    fallbackLng: 'ru',  // Стандартный язык
+    lng: 'ru',
+    fallbackLng: 'ru',
     debug: true,
     resources: {
       ru,
     },
     interpolation: {
-      escapeValue: false
-    }
+      escapeValue: false,
+    },
   });
 
 export default i18next;

@@ -20,8 +20,6 @@
   },
   "homepage": "https://github.com/LittleCuteSandra/frontend-project-12#readme",
   "dependencies": {
-    "@hexlet/chat-server": "^2.0.4",
-    "@reduxjs/toolkit": "^2.5.1",
-    "leo-profanity": "^1.7.0"
+    "@hexlet/chat-server": "^2.0.4"
   }
 }

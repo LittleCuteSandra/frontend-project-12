@@ -3,15 +3,16 @@ import routes from '../utils/routes.js';
 
 export const messagesApi = createApi({
   reducerPath: 'messages',
-  baseQuery: fetchBaseQuery({ baseUrl: routes.messagesPath(),
+  baseQuery: fetchBaseQuery({
+    baseUrl: routes.messagesPath(),
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
+      const { token } = getState().auth;
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
+        headers.set('Authorization', `Bearer ${token}`);
       }
       return headers;
     },
-   }),
+  }),
   endpoints: (builder) => ({
     getMessages: builder.mutation({
       query: () => '',

@@ -3,15 +3,16 @@ import routes from '../utils/routes.js';
 
 export const channelsApi = createApi({
   reducerPath: 'channels',
-  baseQuery: fetchBaseQuery({ baseUrl: routes.channelsPath(),
+  baseQuery: fetchBaseQuery({
+    baseUrl: routes.channelsPath(),
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
+      const { token } = getState().auth;
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`)
+        headers.set('Authorization', `Bearer ${token}`);
       }
       return headers;
     },
-   }),
+  }),
   endpoints: (builder) => ({
     getChannels: builder.mutation({
       query: () => '',

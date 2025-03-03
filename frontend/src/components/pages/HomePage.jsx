@@ -1,17 +1,14 @@
+import { useState, useEffect } from 'react';
+import { Spinner } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import io from 'socket.io-client';
 import ChannelsForm from '../channelsComponents/ChannelsForm.jsx';
 import Header from '../Header.jsx';
-import { useState, useEffect } from "react";
-import { Spinner } from 'react-bootstrap';
 import { useGetChannelsMutation } from '../../services/channelsApi.js';
 import { useGetMessagesMutation } from '../../services/messagesApi.js';
-import { setChannels } from '../../slices/channelsSlice.js';
-import { setMessages } from '../../slices/messagesSlice.js';
-import { useDispatch } from 'react-redux';
 import routes from '../../utils/routes.js';
-
-import io from 'socket.io-client';
-import { addMessageInStore, removeMessagesInStore } from '../../slices/messagesSlice.js';
-import { addChannelInStore, renameChannelInStore, removeChannelInStore } from '../../slices/channelsSlice.js';
+import { setMessages, addMessageInStore, removeMessagesInStore } from '../../slices/messagesSlice.js';
+import { setChannels, addChannelInStore, renameChannelInStore, removeChannelInStore } from '../../slices/channelsSlice.js';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -20,7 +17,6 @@ const HomePage = () => {
   const [getMessages] = useGetMessagesMutation();
 
   let socket = io();
-  //const dispatch = useDispatch();
 
   useEffect(() => {
     socket.on('newMessage', (message) => {
@@ -61,7 +57,8 @@ const HomePage = () => {
 
   return (
     <div className="h-100 bg-light">
-      {dataisLoading ? <Spinner animation="grow" /> :
+      {dataisLoading ? <Spinner animation="grow" />
+      :
         (
           <div className="d-flex flex-column h-100">
             <Header />

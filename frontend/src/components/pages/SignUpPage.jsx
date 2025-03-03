@@ -1,10 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 import { Formik, Field } from 'formik';
 import { FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { useSignUpUserMutation } from '../../services/authorizationApi.js';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { useSignUpUserMutation } from '../../services/authorizationApi.js';
 import Header from '../Header.jsx';
 import useAuth from '../../hooks/useAuth.js';
 import routes from '../../utils/routes.js';
@@ -65,7 +65,7 @@ const SignUpForm = () => {
                             id="username"
                             type="text"
                             name="username"
-                            className={`form-control ${errors.username && touched.username || authorizError || serverError ? 'is-invalid' : ''}`}
+                            className={`form-control ${(errors.username && touched.username) || authorizError || serverError ? 'is-invalid' : ''}`}
                             placeholder={t('auth.userName')}
                             autoComplete="username"
                             innerRef={inputEl}
@@ -77,7 +77,7 @@ const SignUpForm = () => {
                             id="password"
                             type="password"
                             name="password"
-                            className={`form-control ${errors.password && touched.password || authorizError || serverError ? 'is-invalid' : ''}`}
+                            className={`form-control ${(errors.password && touched.password) || authorizError || serverError ? 'is-invalid' : ''}`}
                             placeholder={t('auth.password')}
                             autoComplete="new-password"
                           />
@@ -88,7 +88,7 @@ const SignUpForm = () => {
                             id="confirmPassword"
                             type="password"
                             name="confirmPassword"
-                            className={`form-control ${errors.confirmPassword && touched.confirmPassword || authorizError || serverError ? 'is-invalid' : ''}`}
+                            className={`form-control ${(errors.confirmPassword && touched.confirmPassword) || authorizError || serverError ? 'is-invalid' : ''}`}
                             placeholder={t('auth.repeatPassword')}
                             autoComplete="new-password"
                           />
