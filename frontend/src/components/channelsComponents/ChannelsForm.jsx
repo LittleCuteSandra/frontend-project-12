@@ -25,7 +25,7 @@ const ChannelsForm = () => {
       dispatch(setCurrentChannel(channel.id));
     };
     const isChannelActive = currentChannelID === channel.id;
-    const btnClass = cn('w-100', 'rounded-0', 'text-start', 'btn', {
+    const btnClass = cn('w-100', 'rounded-0', 'text-start', 'text-truncate', 'btn', {
       'btn-secondary': isChannelActive,
     });
     return (<ListGroup.Item as="il" key={channel.id} action className="nav-item w-100">
