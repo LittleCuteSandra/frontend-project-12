@@ -60,16 +60,15 @@ const HomePage = () => {
   return (
     <div className="h-100 bg-light">
       {dataisLoading ? <Spinner animation="grow" /> : (
-          <div className="d-flex flex-column h-100">
-            <Header />
-            <div className="container h-100 my-4 overflow-hidden rounded shadow">
-              <div className="row h-100 bg-white flex-md-row">
-                <ChannelsForm />
-              </div>
+        <div className="d-flex flex-column h-100">
+          <Header />
+          <div className="container h-100 my-4 overflow-hidden rounded shadow">
+            <div className="row h-100 bg-white flex-md-row">
+              <ChannelsForm />
             </div>
           </div>
-        )
-      }
+        </div>
+      )}
     </div>
   );
 };

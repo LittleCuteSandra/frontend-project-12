@@ -7,15 +7,15 @@ const MessagesForm = () => {
   const { channels } = useSelector((state) => state.channel);
   const { currentChannelID } = useSelector((state) => state.channel);
   const { messages } = useSelector((state) => state.message);
-  const needChannel = channels.find((channel) => channel.id === currentChannelID);
-  const needMessages = messages.filter((message) => message.channelId === currentChannelID);
+  const needChan = channels.find((channel) => channel.id === currentChannelID);
+  const needMes = messages.filter((message) => message.channelId === currentChannelID);
 
   return (
     <div className="col p-0 h-100">
       <div className="d-flex flex-column h-100">
-        <MessagesHeader name={needChannel ? needChannel.name : null} messagesNumber={needMessages.length} />
+        <MessagesHeader name={needChan ? needChan.name : null} messagesNumber={needMes.length} />
         <div id="messages-box" className="chat-messages overflow-auto px-5 ">
-          {needMessages.map((message) => <Message key={message.id} message={message} />)}
+          {needMes.map((message) => <Message key={message.id} message={message} />)}
         </div>
         <MessageSendForm currentChannelID={currentChannelID} />
       </div>

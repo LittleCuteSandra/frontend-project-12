@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import cn from 'classnames';
 import { showModal } from '../../slices/modalSlice.js';
 
-const ChannelButton = ({ isChannelActive, channelId }) => {
+const ChannelButton = ({ isActive, channelId }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -17,12 +17,12 @@ const ChannelButton = ({ isChannelActive, channelId }) => {
   };
 
   const btnClass = cn('flex-grow-0', 'dropdown-toggle', 'dropdown-toggle-split', 'btn', {
-    'btn-secondary': isChannelActive,
+    'btn-secondary': isActive,
   });
 
   return (
     <>
-      <Dropdown.Toggle split variant={isChannelActive ? '' : null} className={btnClass}>
+      <Dropdown.Toggle split variant={isActive ? '' : null} className={btnClass}>
         <span className="visually-hidden">{t('channels.control')}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu>

@@ -37,11 +37,7 @@ const ChannelsForm = () => {
             <span className="me-1">#</span>
             {channel.name}
           </button>
-          {channel.removable && <ChannelButton 
-            isChannelActive={isChannelActive}
-            channelId={channel.id}
-            />
-          }
+          {channel.removable && <ChannelButton isActive={isChannelActive} channelId={channel.id} />}
         </Dropdown>
       </ListGroup.Item>
     );
