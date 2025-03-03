@@ -70,7 +70,7 @@ const LogInForm = () => {
                             innerRef={inputEl}
                           />
                         </FloatingLabel>
-                        <FloatingLabel className="mb-3" controlId="passwor" label={t('auth.password')}>
+                        <FloatingLabel className="mb-3" controlId="password" label={t('auth.password')}>
                           <Field
                             id="password"
                             type="password"
