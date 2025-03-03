@@ -43,7 +43,7 @@ const RenameModal = ({show, channelID}) => {
         <Formik initialValues={{ name: '' }} validationSchema={channelValidationSchema(t, channelsName)} onSubmit={submitForm}>
           {({ handleSubmit, errors }) => (
             <Form onSubmit={handleSubmit}>
-              <FloatingLabel className="mb-3" controlId="name" label={t('channels.modal.newName')}>
+              <FloatingLabel className="mb-3" controlId="name" label={t('channels.modal.channelName')}>
                 <Field
                   id="name"
                   type="text"
