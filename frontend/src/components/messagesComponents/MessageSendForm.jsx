@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import { Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
@@ -21,10 +20,12 @@ const MessageSendForm = ({ currentChannelID }) => {
   const submitForm = async () => {
     setButtonStatus('disabled');
     const body = filter.clean(inputMessage.trim());
-    const dataForServer = { body, channelId: currentChannelID, username: localStorage.getItem('username') };
-    const response = await addMessage(dataForServer);
-    if (Object.hasOwn(response, 'error')) {
-      toast.error(t('notification.error'));
+    if (body) {
+      const dataForServer = { body, channelId: currentChannelID, username: localStorage.getItem('username') };
+      const response = await addMessage(dataForServer);
+      if (Object.hasOwn(response, 'error')) {
+        toast.error(t('notification.error'));
+      }
     }
     setInputMessage('');
     setButtonStatus('');
