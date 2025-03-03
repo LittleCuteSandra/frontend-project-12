@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { useEffect } from "react";
-import { useDispatch } from 'react-redux';
+//import { useEffect } from "react";
+//import { useSelector, useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
-import io from 'socket.io-client';
-import { addMessageInStore } from '../slices/messagesSlice.js';
-import { addChannelInStore, renameChannelInStore } from '../slices/channelsSlice.js';
+
+//import io from 'socket.io-client';
+//import { addMessageInStore, removeMessagesInStore } from '../slices/messagesSlice.js';
+//import { addChannelInStore, renameChannelInStore, removeChannelInStore } from '../slices/channelsSlice.js';
+
 import filter from 'leo-profanity';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import LogInForm from './pages/LogInPage.jsx';
@@ -18,10 +20,9 @@ const rollbar = {
   accessToken: localStorage.getItem('token'),
   environment: 'testenv',
 };
-//rollbar.reportMessage("Timeout connecting to database");
 
 const App = () => {
-  let socket = io();
+  /*let socket = io();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,10 +30,10 @@ const App = () => {
       dispatch(addMessageInStore(message));
     });
 
-    /*socket.on('removeChannel', (channelId) => {
-      console.log('тут');
-      dispatch(removeChannelInStore(channelId)); // тут не работатет
-    });*/
+    socket.on('removeChannel', (channelId) => {
+      dispatch(removeChannelInStore(channelId));
+      dispatch(removeMessagesInStore(channelId));
+    });
 
     socket.on('renameChannel', (updatedChannel) => {
       dispatch(renameChannelInStore(updatedChannel));
@@ -48,7 +49,7 @@ const App = () => {
       socket.off('renameChannel');
       socket.off('newChannel');
     };
-  }, [dispatch]);
+  }, [dispatch, socket]);*/
 
   filter.loadDictionary('en');
   const ruLng = filter.getDictionary('ru');

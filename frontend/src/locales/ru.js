@@ -2,9 +2,11 @@ export default {
   translation: {
     validation: {
       requiredField: 'Обязательное поле',
-      minThree: 'Минимум 3 буквы',
-      maxTwenty: 'Максимум 20 букв',
-      minSix: 'Минимум 6 символов',
+      //minThree: 'Минимум 3 буквы',
+      //maxTwenty: 'Максимум 20 букв',
+      minThree: 'От 3 до 20 символов',
+      maxTwenty: 'От 3 до 20 символов',
+      minSix: 'Не менее 6 символов',
       samePassword: 'Пароли должны совпадать',
       uniqueName: 'Названия каналов должны быть уникальными',
     },
