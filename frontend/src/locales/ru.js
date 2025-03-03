@@ -35,7 +35,8 @@ export default {
     channels: {
       modal: {
         addChannel: 'Добавить канал',
-        channelName: 'Название канала',
+        channelName: 'Имя канала',
+        //channelName: 'Название канала',
         cancel: 'Отменить',
         send: 'Отправить',
         renameChannel: 'Переименовать канал',
