@@ -1,5 +1,5 @@
 import {
-  BrowserRouter, Routes, Route, Navigate
+  BrowserRouter, Routes, Route, Navigate,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -16,30 +16,33 @@ const rollbar = {
   environment: 'testenv',
 };
 
+const Private = ({ children }) => {
+  if (localStorage.getItem('token')) {
+    return children;
+  }
+  return (
+    <Navigate to={routes.logInPage()} replace />
+  );
+};
+
 const App = () => {
   filter.loadDictionary('en');
   const ruLng = filter.getDictionary('ru');
   filter.add(ruLng);
-
-  const Private = ({ children }) => {
-    if (localStorage.getItem('token')) {
-      return children;
-    }
-    return (
-      <Navigate to={routes.logInPage()} replace={true} />
-    );
-  };
 
   return (
     <RollBarProvider config={rollbar}>
       <ErrorBoundary>
         <BrowserRouter>
           <Routes>
-            <Route path={routes.homePage()} element={
-              <Private>
-                <HomePage />
-              </Private>
-            } />
+            <Route
+              path={routes.homePage()}
+              element={(
+                <Private>
+                  <HomePage />
+                </Private>
+              )}
+            />
             <Route path={routes.logInPage()} element={<LogInForm />} />
             <Route path={routes.signUpPage()} element={<SignUpForm />} />
             <Route path={routes.notFoundPage()} element={<NotFoundPage />} />

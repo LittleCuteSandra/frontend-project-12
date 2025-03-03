@@ -34,7 +34,13 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
-      'max-len': ["error", { "code": 120 }],
+      'max-len': ['error', { 'code': 120 }],
+      'no-param-reassign': ['error', {
+        props: true,
+        ignorePropertyModificationsFor: [
+          'state',
+        ]
+      }],
     },
   },
 ]

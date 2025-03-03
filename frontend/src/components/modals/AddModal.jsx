@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Formik, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  FloatingLabel, Form, Modal, Button
+  FloatingLabel, Form, Modal, Button,
 } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';

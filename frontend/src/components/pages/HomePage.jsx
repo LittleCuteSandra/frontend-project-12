@@ -8,7 +8,9 @@ import { useGetChannelsMutation } from '../../services/channelsApi.js';
 import { useGetMessagesMutation } from '../../services/messagesApi.js';
 import routes from '../../utils/routes.js';
 import { setMessages, addMessageInStore, removeMessagesInStore } from '../../slices/messagesSlice.js';
-import { setChannels, addChannelInStore, renameChannelInStore, removeChannelInStore } from '../../slices/channelsSlice.js';
+import {
+  setChannels, addChannelInStore, renameChannelInStore, removeChannelInStore,
+} from '../../slices/channelsSlice.js';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -16,7 +18,7 @@ const HomePage = () => {
   const [getChannels] = useGetChannelsMutation();
   const [getMessages] = useGetMessagesMutation();
 
-  let socket = io();
+  const socket = io();
 
   useEffect(() => {
     socket.on('newMessage', (message) => {
@@ -58,7 +60,7 @@ const HomePage = () => {
   return (
     <div className="h-100 bg-light">
       {dataisLoading ? <Spinner animation="grow" />
-      :
+        :
         (
           <div className="d-flex flex-column h-100">
             <Header />
@@ -68,8 +70,7 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-        )
-      }  
+        )}  
     </div>
   );
 };
