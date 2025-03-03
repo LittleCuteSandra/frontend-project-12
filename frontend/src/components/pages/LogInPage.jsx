@@ -59,13 +59,13 @@ const LogInForm = () => {
                     {({ handleSubmit }) => (
                       <Form className="w-50" onSubmit={handleSubmit}>
                         <h1 className="text-center mb-4">{t('auth.enter')}</h1>
-                        <FloatingLabel className="mb-3" controlId="username" label={t('auth.userName')}>
+                        <FloatingLabel className="mb-3" controlId="username" label={t('auth.yourNick')}>
                           <Field
                             id="username"
                             type="text"
                             name="username"
                             className={`form-control ${authorizError || serverError ? 'is-invalid' : ''}`}
-                            placeholder={t('auth.userName')}
+                            placeholder={t('auth.yourNick')}
                             autoComplete="username"
                             innerRef={inputEl}
                           />

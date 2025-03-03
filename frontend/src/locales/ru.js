@@ -16,11 +16,12 @@ export default {
       serverError: 'Ошибка сервера',
       userDataError: 'Неверные имя пользователя или пароль',
       regist: 'Регистрация',
-      userName: 'Ваш ник',
+      userName: 'Имя пользователя',
       password: 'Пароль',
       repeatPassword: 'Подтвердите пароль',
       sameUser: 'Такой пользователь уже существует',
       notHaveaccount: 'Нет аккаунта? ',
+      yourNick: 'Ваш ник',
     },
     notFound: {
       notSuchPage: 'Страница не найдена',
