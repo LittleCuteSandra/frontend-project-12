@@ -1,15 +1,11 @@
 install:
-  npm ci --legacy-peer-deps
+	npm ci
 
 start:
-  npm start
+	npm start
 
 build:
-  rm build -rf
-  npm run build
+	npm build
 
-start-frontend:
-  npm run dev
-
-start-backend:
-  npx start-server -s ./dist -p 5001 .
+lint:
+	npx eslint --ext js,jsx --no-eslintrc --config .eslintrc.yml .
