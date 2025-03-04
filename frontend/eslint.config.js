@@ -34,13 +34,6 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
-      'no-param-reassign': ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }]
-      /*'no-param-reassign': ['error', {
-        props: true,
-        ignorePropertyModificationsFor: [
-          'state',
-        ],
-      }],*/
     },
   },
 ];
