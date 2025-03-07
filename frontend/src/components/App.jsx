@@ -16,12 +16,6 @@ const rollbarConfig = {
   environment: 'testenv',
 };
 
-function TestError() {
-  const a = null;
-  return a.hello();
-}
-
-
 const Private = ({ children }) => {
   if (localStorage.getItem('token')) {
     return children;
@@ -39,7 +33,6 @@ const App = () => {
   return (
     <RollBarProvider config={rollbarConfig}>
       <ErrorBoundary>
-        <TestError />
         <BrowserRouter>
           <Routes>
             <Route
