@@ -11,10 +11,16 @@ import SignUpForm from './pages/SignUpPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import routes from '../utils/routes.js';
 
-const rollbar = {
-  accessToken: localStorage.getItem('token'),
+const rollbarConfig = {
+  accessToken: '1462a60aadbb463ba48230f2e7111ec1',
   environment: 'testenv',
 };
+
+function TestError() {
+  const a = null;
+  return a.hello();
+}
+
 
 const Private = ({ children }) => {
   if (localStorage.getItem('token')) {
@@ -31,8 +37,9 @@ const App = () => {
   filter.add(ruLng);
 
   return (
-    <RollBarProvider config={rollbar}>
+    <RollBarProvider config={rollbarConfig}>
       <ErrorBoundary>
+        <TestError />
         <BrowserRouter>
           <Routes>
             <Route
